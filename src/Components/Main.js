@@ -1,54 +1,75 @@
-import React, { Component } from 'react';
-import Title from './Title'
-import PhotoWall from "./PhotoWall"
-import Posts from "../data/posts"
-
+import React, { Component } from "react";
+import Title from "./Title";
+import PhotoWall from "./PhotoWall";
+import Posts from "../data/posts";
+import AddPhoto from "./AddPhoto";
 
 class Main extends Component {
-    constructor() {
-        super()
-        this.state = {
-            posts: []
-        }
-        this.removePhoto = this.removePhoto.bind(this)
-    }
+  constructor() {
+    super();
+    this.state = {
+      posts: [],
+    };
+    this.removePhoto = this.removePhoto.bind(this);
+    this.navigate = this.navigate.bind(this);
+  }
 
-    removePhoto(postRemoved) {
-        console.log(postRemoved.description)
+  removePhoto(postRemoved) {
+    console.log(postRemoved.description);
 
-        this.setState((state) => ({
-            posts: state.posts.filter(post => post !== postRemoved)
-        }))
-    }
+    this.setState((state) => ({
+      posts: state.posts.filter((post) => post !== postRemoved),
+    }));
+  }
 
-    componentDidMount() {
-        const data = SimulateFetchFromDB()
-        this.setState({
-            posts: data
-        })
-    }
+  navigate() {
+    this.setState({
+      screen: "addPhoto",
+    });
+  }
 
-    componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate")
-        console.log(prevState.posts)
-        console.log(this.state.posts)
-    }
+  componentDidMount() {
+    const data = SimulateFetchFromDB();
+    this.setState({
+      posts: data,
+      screen: "photos", // photos, addPhoto
+    });
+  }
 
-    render() {
-        return (
-            <div>
-                <Title title={"Photo Wall"} />
-                <PhotoWall posts={this.state.posts} onRemovePhoto={this.removePhoto} />
-            </div>
-        )
-    }
+  componentDidUpdate(prevProps, prevState) {
+    console.log("componentDidUpdate");
+    console.log(prevState.posts);
+    console.log(this.state.posts);
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.screen === "photos" && (
+          <div>
+            <Title title={"Photo Wall"} />
+            <PhotoWall
+              posts={this.state.posts}
+              onRemovePhoto={this.removePhoto}
+              onNavigate={this.navigate}
+            />
+          </div>
+        )}
+        {this.state.screen === "addPhoto" && (
+          <div>
+            <AddPhoto />
+          </div>
+        )}
+      </div>
+    );
+  }
 }
 
 function SimulateFetchFromDB() {
-    return Posts
+  return Posts;
 }
 
-export default Main
+export default Main;
 
 /*
 url("https://image.flaticon.com/icons/svg/60/60740.svg") center no-repeat;
