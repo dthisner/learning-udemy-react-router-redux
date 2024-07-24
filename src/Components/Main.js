@@ -23,6 +23,12 @@ class Main extends Component {
     }));
   }
 
+  addPhoto(postSubmitted) {
+    this.setState((state) => ({
+      posts: state.posts.concat([postSubmitted]),
+    }));
+  }
+
   componentDidMount() {
     const data = SimulateFetchFromDB();
     this.setState({
@@ -30,22 +36,22 @@ class Main extends Component {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate");
-    console.log(prevState.posts);
-    console.log(this.state.posts);
-  }
+  //   componentDidUpdate(prevProps, prevState) {
+  //     console.log("componentDidUpdate");
+  //     console.log(prevState.posts);
+  //     console.log(this.state.posts);
+  //   }
 
   render() {
     return (
       <div>
+        <Title title={"Photo Wall"} />
         <Routes>
           <Route
             exact
             path="/"
             element={
               <div>
-                <Title title={"Photo Wall"} />
                 <PhotoWall
                   posts={this.state.posts}
                   onRemovePhoto={this.removePhoto}
@@ -54,7 +60,16 @@ class Main extends Component {
               </div>
             }
           />
-          <Route path="/addphoto" element={<AddPhoto />} />
+          <Route
+            path="/addphoto"
+            element={
+              <AddPhoto
+                onAddPhoto={(addedPost) => {
+                  this.addPhoto(addedPost);
+                }}
+              />
+            }
+          />
         </Routes>
       </div>
     );
