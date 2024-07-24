@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Route, Routes } from "react-router-dom";
+
 import Title from "./Title";
 import PhotoWall from "./PhotoWall";
 import Posts from "../data/posts";
@@ -11,7 +13,6 @@ class Main extends Component {
       posts: [],
     };
     this.removePhoto = this.removePhoto.bind(this);
-    this.navigate = this.navigate.bind(this);
   }
 
   removePhoto(postRemoved) {
@@ -22,17 +23,10 @@ class Main extends Component {
     }));
   }
 
-  navigate() {
-    this.setState({
-      screen: "addPhoto",
-    });
-  }
-
   componentDidMount() {
     const data = SimulateFetchFromDB();
     this.setState({
       posts: data,
-      screen: "photos", // photos, addPhoto
     });
   }
 
@@ -45,21 +39,23 @@ class Main extends Component {
   render() {
     return (
       <div>
-        {this.state.screen === "photos" && (
-          <div>
-            <Title title={"Photo Wall"} />
-            <PhotoWall
-              posts={this.state.posts}
-              onRemovePhoto={this.removePhoto}
-              onNavigate={this.navigate}
-            />
-          </div>
-        )}
-        {this.state.screen === "addPhoto" && (
-          <div>
-            <AddPhoto />
-          </div>
-        )}
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <div>
+                <Title title={"Photo Wall"} />
+                <PhotoWall
+                  posts={this.state.posts}
+                  onRemovePhoto={this.removePhoto}
+                  onNavigate={this.navigate}
+                />
+              </div>
+            }
+          />
+          <Route path="/addphoto" element={<AddPhoto />} />
+        </Routes>
       </div>
     );
   }
