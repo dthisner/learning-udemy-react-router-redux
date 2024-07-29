@@ -1,12 +1,19 @@
-import Posts from "../data/posts";
+import _posts from "../data/posts";
 
-const postReducer = function (state = Posts, action) {
-  console.log(action.id);
+const postReducer = function posts(state = _posts, action) {
+  console.log(action.type);
   switch (action.type) {
-    case "REMOVE_POST":
-      return state.filter((post) => post.id !== action.id);
-    case "ADD_POST":
-      return [...state, action.post];
+    case "REMOVE_PICTURE":
+      return [...state.slice(0, action.i), ...state.slice(action.i + 1)];
+    case "ADD_PICTURE":
+      return [
+        {
+          id: action.id,
+          imageLink: action.imageLink,
+          description: action.description,
+        },
+        ...state,
+      ];
     default:
       return state;
   }
