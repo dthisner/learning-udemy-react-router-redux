@@ -3,46 +3,20 @@ import { Route, Routes } from "react-router-dom";
 
 import Title from "./Title";
 import PhotoWall from "./PhotoWall";
-import Posts from "../data/posts";
 import AddPhoto from "./AddPhoto";
 
 class Main extends Component {
   constructor() {
     super();
-    this.state = {
-      posts: [],
-    };
-    this.removePhoto = this.removePhoto.bind(this);
-  }
-
-  removePhoto(postRemoved) {
-    console.log(postRemoved.description);
-
-    this.setState((state) => ({
-      posts: state.posts.filter((post) => post !== postRemoved),
-    }));
-  }
-
-  addPhoto(postSubmitted) {
-    this.setState((state) => ({
-      posts: state.posts.concat([postSubmitted]),
-    }));
   }
 
   componentDidMount() {
-    const data = SimulateFetchFromDB();
-    this.setState({
-      posts: data,
-    });
+    this.props.removePost(1);
   }
 
-  //   componentDidUpdate(prevProps, prevState) {
-  //     console.log("componentDidUpdate");
-  //     console.log(prevState.posts);
-  //     console.log(this.state.posts);
-  //   }
-
   render() {
+    // const props = [...this.props];
+
     return (
       <div>
         <Title title={"Photo Wall"} />
@@ -52,11 +26,7 @@ class Main extends Component {
             path="/"
             element={
               <div>
-                <PhotoWall
-                  posts={this.state.posts}
-                  onRemovePhoto={this.removePhoto}
-                  onNavigate={this.navigate}
-                />
+                <PhotoWall {...this.props} />
               </div>
             }
           />
@@ -74,10 +44,6 @@ class Main extends Component {
       </div>
     );
   }
-}
-
-function SimulateFetchFromDB() {
-  return Posts;
 }
 
 export default Main;

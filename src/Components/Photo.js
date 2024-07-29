@@ -13,7 +13,7 @@ function Photo(props) {
       <div className="button-container">
         <button
           onClick={() => {
-            props.onRemovePhoto(post);
+            props.removePost(post.id);
           }}
         >
           Remove
@@ -25,7 +25,6 @@ function Photo(props) {
 
 Photo.propType = {
   post: PropTypes.object.isRequired,
-  onRemovePhoto: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
 };
 

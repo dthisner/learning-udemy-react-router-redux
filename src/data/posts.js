@@ -13,9 +13,8 @@ const Posts = [
   },
   {
     id: 2,
-    description: "Fun times",
-    imageLink:
-      "https://media.gq.com/photos/559ecd815f1c7af15a1ef012/master/w_960%2Cc_limit/amy-schumer-gq-04.jpg",
+    description: "This is the way",
+    imageLink: "https://storage.googleapis.com/pod_public/1300/123411.jpg",
   },
 ];
 
