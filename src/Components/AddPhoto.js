@@ -25,17 +25,13 @@ class AddPhoto extends Component {
   render() {
     return (
       <div>
-        {" "}
-        <h1>PhotoWall</h1>{" "}
         <div className="form">
-          {" "}
           <form onSubmit={this.handleSubmit}>
-            {" "}
-            <input type="text" placeholder="Link" name="link" />{" "}
-            <input type="text" placeholder="Description" name="description" />{" "}
-            <button>Post</button>{" "}
-          </form>{" "}
-        </div>{" "}
+            <input type="text" placeholder="Link" name="link" />
+            <input type="text" placeholder="Description" name="description" />
+            <button>Post</button>
+          </form>
+        </div>
       </div>
     );
   }
