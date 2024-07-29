@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 
 import Title from "./Title";
 import PhotoWall from "./PhotoWall";
@@ -10,35 +10,28 @@ class Main extends Component {
     super();
   }
 
-  componentDidMount() {
-    this.props.removePost(1);
-  }
-
   render() {
-    // const props = [...this.props];
-
     return (
       <div>
-        <Title title={"Photo Wall"} />
+        <Link to="/" className="noDecoration">
+          <Title title={"Photo Wall"} />
+        </Link>
         <Routes>
           <Route
             exact
             path="/"
             element={
               <div>
-                <PhotoWall {...this.props} />
+                <PhotoWall
+                  posts={this.props.posts}
+                  removePost={this.props.removePost}
+                />
               </div>
             }
           />
           <Route
             path="/addphoto"
-            element={
-              <AddPhoto
-                onAddPhoto={(addedPost) => {
-                  this.addPhoto(addedPost);
-                }}
-              />
-            }
+            element={<AddPhoto onAddPost={this.props.addPost} />}
           />
         </Routes>
       </div>
