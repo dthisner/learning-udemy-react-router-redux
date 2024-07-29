@@ -1,49 +1,28 @@
-import React, { Component } from "react";
+import React from "react";
 import { Route, Routes, Link } from "react-router-dom";
 
 import Title from "./Title";
 import PhotoWall from "./PhotoWall";
 import AddPhoto from "./AddPhoto";
 
-class Main extends Component {
-  constructor() {
-    super();
-  }
-
-  render() {
-    return (
-      <div>
-        <Link to="/" className="noDecoration">
-          <Title title={"Photo Wall"} />
-        </Link>
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <div>
-                <PhotoWall
-                  posts={this.props.posts}
-                  removePost={this.props.removePost}
-                />
-              </div>
-            }
-          />
-          <Route
-            path="/addphoto"
-            element={<AddPhoto onAddPost={this.props.addPost} />}
-          />
-        </Routes>
-      </div>
-    );
-  }
-}
+const Main = ({ posts, removePost, addPost }) => (
+  <div>
+    <Link to="/" className="noDecoration">
+      <Title title="Photo Wall" />
+    </Link>
+    <Routes>
+      <Route
+        path="/"
+        element={<PhotoWall posts={posts} onRemovePost={removePost} />}
+      />
+      <Route path="/addphoto" element={<AddPhoto onAddPost={addPost} />} />
+    </Routes>
+  </div>
+);
 
 export default Main;
 
 /*
-url("https://image.flaticon.com/icons/svg/60/60740.svg") center no-repeat;
-
 The following methods are called when a component is being added to the DOM:
 
 constructor() : called before component is mounted. NEVER put side effect code inside of the constructor. 
